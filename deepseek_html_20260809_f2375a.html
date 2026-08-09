@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerseyBORADA · Online Satış</title>
+  <!-- Font Awesome for premium icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    }
+    body {
+      background: #f6f8fc;
+      color: #1e1e2a;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .top-banner {
+      background: #fef3e7;
+      color: #7a3e1b;
+      text-align: center;
+      padding: 8px 0;
+      font-size: 12px;
+      letter-spacing: 0.3px;
+      border-bottom: 1px solid #ffd7b5;
+    }
+    .navbar {
+      background: white;
+      padding: 12px 5vw;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px 24px;
+      border-bottom: 1px solid #e5e9f0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+    .brand {
+      font-weight: 800;
+      font-size: 26px;
+      letter-spacing: -0.5px;
+      color: #e35f1e;
+      white-space: nowrap;
+    }
+    .brand span {
+      color: #1e2b3c;
+    }
+    .search-box {
+      flex: 1;
+      min-width: 200px;
+      display: flex;
+      border: 2px solid #e35f1e;
+      border-radius: 30px;
+      overflow: hidden;
+      background: white;
+    }
+    .search-box input {
+      flex: 1;
+      border: none;
+      padding: 10px 18px;
+      outline: none;
+      background: transparent;
+      font-size: 14px;
+    }
+    .search-box button {
+      background: #e35f1e;
+      border: none;
+      color: white;
+      font-weight: 600;
+      padding: 0 22px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .search-box button:hover {
+      background: #c94f12;
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .nav-icon {
+      background: transparent;
+      border: none;
+      font-size: 20px;
+      padding: 6px 8px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.2s;
+      color: #2c3e4f;
+      position: relative;
+    }
+    .nav-icon:hover {
+      background: #f0f2f6;
+    }
+    .cart-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: #e35f1e;
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      border-radius: 50%;
+      padding: 2px 6px;
+      min-width: 18px;
+      text-align: center;
+    }
+    .avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #2d3446;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 15px;
+    }
+    .btn-signup {
+      background: transparent;
+      border: 1.5px solid #e35f1e;
+      color: #e35f1e;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-signup:hover {
+      background: #e35f1e;
+      color: white;
+    }
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 20px 20px 40px;
+    }
+    .role-switcher {
+      background: white;
+      padding: 12px 18px;
+      border-radius: 40px;
+      border: 1px solid #e2e7ef;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px 20px;
+      margin-bottom: 24px;
+    }
+    .role-switcher strong {
+      margin-right: 4px;
+    }
+    .role-switcher select {
+      padding: 7px 16px 7px 12px;
+      border-radius: 30px;
+      border: 1px solid #d0d7e2;
+      background: white;
+      font-weight: 500;
+    }
+    .category-row {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+      flex-wrap: nowrap;
+    }
+    .cat-btn {
+      background: white;
+      border: 2px solid #dfe4ed;
+      padding: 8px 22px;
+      border-radius: 40px;
+      font-weight: 600;
+      color: #2b3b4e;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+    }
+    .cat-btn i {
+      font-size: 16px;
+    }
+    /* Category color codes */
+    .cat-btn[data-cat="Tümü"] { border-color: #6c7a8a; color: #2d4059; }
+    .cat-btn[data-cat="Tümü"]:hover, .cat-btn[data-cat="Tümü"].active { background: #eef2f7; border-color: #4a5a6e; }
+
+    .cat-btn[data-cat="Elektronik"] { border-color: #2563eb; color: #1d4ed8; }
+    .cat-btn[data-cat="Elektronik"]:hover, .cat-btn[data-cat="Elektronik"].active { background: #dbeafe; border-color: #2563eb; }
+
+    .cat-btn[data-cat="Ev Yaşam"] { border-color: #059669; color: #047857; }
+    .cat-btn[data-cat="Ev Yaşam"]:hover, .cat-btn[data-cat="Ev Yaşam"].active { background: #d1fae5; border-color: #059669; }
+
+    .cat-btn[data-cat="Moda"] { border-color: #d946ef; color: #c026d3; }
+    .cat-btn[data-cat="Moda"]:hover, .cat-btn[data-cat="Moda"].active { background: #f3e8ff; border-color: #d946ef; }
+
+    .cat-btn[data-cat="Kozmetik"] { border-color: #ec4899; color: #db2777; }
+    .cat-btn[data-cat="Kozmetik"]:hover, .cat-btn[data-cat="Kozmetik"].active { background: #fce7f3; border-color: #ec4899; }
+
+    .cat-btn[data-cat="Spor"] { border-color: #f59e0b; color: #d97706; }
+    .cat-btn[data-cat="Spor"]:hover, .cat-btn[data-cat="Spor"].active { background: #fef3c7; border-color: #f59e0b; }
+
+    .cat-btn[data-cat="Kitap"] { border-color: #8b5cf6; color: #7c3aed; }
+    .cat-btn[data-cat="Kitap"]:hover, .cat-btn[data-cat="Kitap"].active { background: #ede9fe; border-color: #8b5cf6; }
+
+    .cat-btn[data-cat="Oyuncak"] { border-color: #f97316; color: #ea580c; }
+    .cat-btn[data-cat="Oyuncak"]:hover, .cat-btn[data-cat="Oyuncak"].active { background: #ffedd5; border-color: #f97316; }
+
+    .cat-btn[data-cat="Otomotiv"] { border-color: #3b82f6; color: #2563eb; }
+    .cat-btn[data-cat="Otomotiv"]:hover, .cat-btn[data-cat="Otomotiv"].active { background: #dbeafe; border-color: #3b82f6; }
+
+    .cat-btn[data-cat="Sağlık"] { border-color: #10b981; color: #059669; }
+    .cat-btn[data-cat="Sağlık"]:hover, .cat-btn[data-cat="Sağlık"].active { background: #d1fae5; border-color: #10b981; }
+
+    .hero-card {
+      background: linear-gradient(115deg, #1f2a3f, #3b4668);
+      color: white;
+      border-radius: 20px;
+      padding: 28px 34px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+    .hero-card h1 {
+      font-size: 28px;
+      margin-bottom: 6px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+    .hero-card p {
+      opacity: 0.85;
+      margin-bottom: 16px;
+      max-width: 400px;
+    }
+    .btn-primary {
+      background: #e35f1e;
+      border: none;
+      color: white;
+      font-weight: 700;
+      padding: 10px 24px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 14px;
+    }
+    .btn-primary:hover {
+      background: #c94f12;
+      transform: scale(0.97);
+    }
+    .hero-icon {
+      font-size: 80px;
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,0.25));
+      color: #f9b17a;
+    }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin: 28px 0 14px;
+    }
+    .section-head h2 {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .muted {
+      color: #6f7d92;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 18px;
+    }
+    .product-card {
+      background: white;
+      border-radius: 16px;
+      border: 1px solid #eaeef5;
+      overflow: hidden;
+      transition: 0.2s;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+    .product-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px -8px rgba(0,0,0,0.08);
+    }
+    .product-img {
+      height: 150px;
+      background: #f2f6fe;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 56px;
+      color: #2d4059;
+    }
+    .product-img i {
+      font-size: 64px;
+    }
+    .product-info {
+      padding: 14px 14px 16px;
+    }
+    .product-tag {
+      font-size: 10px;
+      font-weight: 700;
+      color: #1a7d4a;
+      background: #e3f4eb;
+      padding: 2px 10px;
+      border-radius: 30px;
+      display: inline-block;
+      margin-bottom: 6px;
+    }
+    .product-title {
+      font-weight: 600;
+      margin: 6px 0 4px;
+      min-height: 38px;
+      color: #1b2636;
+    }
+    .product-rating {
+      color: #f5b342;
+      font-size: 13px;
+    }
+    .product-rating i {
+      margin-right: 2px;
+    }
+    .product-price {
+      font-size: 20px;
+      font-weight: 800;
+      margin: 8px 0 12px;
+      color: #1f2a3f;
+    }
+    .btn-buy {
+      width: 100%;
+      padding: 9px 0;
+      border: none;
+      background: #fcefe9;
+      color: #b54a12;
+      font-weight: 700;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .btn-buy:hover {
+      background: #e35f1e;
+      color: white;
+    }
+    .seller-panel {
+      display: none;
+    }
+    .seller-panel.visible {
+      display: block;
+    }
+    .buyer-panel.hidden {
+      display: none;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px,1fr));
+      gap: 16px;
+      margin: 18px 0 24px;
+    }
+    .stat-card {
+      background: white;
+      padding: 18px;
+      border-radius: 16px;
+      border: 1px solid #eaeef5;
+    }
+    .stat-card .num {
+      font-size: 26px;
+      font-weight: 800;
+      display: block;
+      margin: 6px 0 2px;
+    }
+    .stat-card .trend {
+      color: #1a7d4a;
+      font-weight: 600;
+    }
+    .order-table {
+      background: white;
+      border-radius: 16px;
+      border: 1px solid #eaeef5;
+      padding: 16px 18px;
+      overflow-x: auto;
+    }
+    .order-table table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .order-table th, .order-table td {
+      padding: 12px 6px;
+      border-bottom: 1px solid #edf1f8;
+      text-align: left;
+    }
+    .order-table th {
+      color: #4e6077;
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 0.3px;
+    }
+    .status-badge {
+      color: #1a7d4a;
+      font-weight: 700;
+    }
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: #1f2a3f;
+      color: white;
+      padding: 14px 22px;
+      border-radius: 40px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      display: none;
+      font-weight: 500;
+      z-index: 999;
+    }
+    @media (max-width: 700px) {
+      .navbar { padding: 10px 16px; gap: 10px; }
+      .search-box { order: 3; flex-basis: 100%; }
+      .hero-card { flex-direction: column; align-items: flex-start; }
+      .hero-icon { margin-top: 12px; font-size: 60px; }
+      .product-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .btn-signup { font-size: 12px; padding: 4px 12px; }
+    }
+    @media (max-width: 450px) {
+      .product-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .product-img { height: 110px; font-size: 44px; }
+      .product-title { font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-banner"><i class="fas fa-truck" style="margin-right:6px;"></i> HerseyBORADA · 500 TL üzeri ücretsiz kargo · Yeni üyeye özel fırsatlar</div>
+
+  <header class="navbar">
+    <div class="brand">Hersey<span>BORADA</span></div>
+    <div class="search-box">
+      <input id="searchInput" placeholder="Ürün, marka veya kategori ara...">
+      <button onclick="filterProducts()"><i class="fas fa-search"></i></button>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-signup" onclick="showToast('📝 Kayıt formu (demo) — şu an sadece görsel')"><i class="fas fa-user-plus"></i> Kaydol</button>
+      <button class="nav-icon" onclick="showToast('🔥 Kampanyalar yakında')"><i class="fas fa-fire"></i></button>
+      <button class="nav-icon" onclick="showToast('📦 Siparişlerim')"><i class="fas fa-box"></i></button>
+      <button class="nav-icon" id="cartBtn"><i class="fas fa-shopping-cart"></i><span class="cart-badge" id="cartCount">0</span></button>
+      <div class="avatar"><i class="fas fa-user"></i></div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="role-switcher">
+      <strong><i class="fas fa-user-circle"></i> Demo hesap</strong>
+      <span class="muted">Görüntüle:</span>
+      <select id="roleSelect" onchange="switchRole()">
+        <option value="buyer1">Selim Yılmaz · Alıcı</option>
+        <option value="buyer2">Mehmet Kaya · Alıcı</option>
+        <option value="buyer3">Elif Demir · Alıcı</option>
+        <option value="seller"><i class="fas fa-store"></i> Mavi Ev · Satıcı</option>
+      </select>
+    </div>
+
+    <!-- alıcı paneli -->
+    <div class="buyer-panel" id="buyerPanel">
+      <div class="category-row" id="categoryList">
+        <button class="cat-btn active" data-cat="Tümü"><i class="fas fa-th-large"></i> Tümü</button>
+        <button class="cat-btn" data-cat="Elektronik"><i class="fas fa-laptop"></i> Elektronik</button>
+        <button class="cat-btn" data-cat="Ev Yaşam"><i class="fas fa-couch"></i> Ev Yaşam</button>
+        <button class="cat-btn" data-cat="Moda"><i class="fas fa-tshirt"></i> Moda</button>
+        <button class="cat-btn" data-cat="Kozmetik"><i class="fas fa-spa"></i> Kozmetik</button>
+        <button class="cat-btn" data-cat="Spor"><i class="fas fa-running"></i> Spor</button>
+        <button class="cat-btn" data-cat="Kitap"><i class="fas fa-book"></i> Kitap</button>
+        <button class="cat-btn" data-cat="Oyuncak"><i class="fas fa-puzzle-piece"></i> Oyuncak</button>
+        <button class="cat-btn" data-cat="Otomotiv"><i class="fas fa-car"></i> Otomotiv</button>
+        <button class="cat-btn" data-cat="Sağlık"><i class="fas fa-heartbeat"></i> Sağlık</button>
+      </div>
+
+      <div class="hero-card">
+        <div>
+          <h1>Merhaba, <span id="greetingUser">Selim</span> 👋</h1>
+          <p><i class="fas fa-gem" style="color:#f9b17a;"></i> İhtiyacın olan ürünleri keşfet, güvenle sepete ekle. HerseyBORADA'da her şey var!</p>
+          <button class="btn-primary" onclick="document.querySelector('.section-head').scrollIntoView({behavior:'smooth'})">Fırsatları keşfet <i class="fas fa-arrow-right"></i></button>
+        </div>
+        <div class="hero-icon"><i class="fas fa-shopping-bag"></i></div>
+      </div>
+
+      <div class="section-head">
+        <h2><i class="fas fa-star" style="color:#f5b342;"></i> Senin için seçtiklerimiz</h2>
+        <span class="muted"><i class="fas fa-clock"></i> 24 ürün · hızlı kargo</span>
+      </div>
+      <div class="product-grid" id="productGrid"></div>
+    </div>
+
+    <!-- satıcı paneli -->
+    <div class="seller-panel" id="sellerPanel">
+      <div class="section-head">
+        <h2><i class="fas fa-chart-line" style="color:#e35f1e;"></i> Mavi Ev · Satıcı paneli</h2>
+        <button class="btn-primary" onclick="showToast('📦 Yeni ürün formu açıldı (demo)')"><i class="fas fa-plus-circle"></i> Ürün ekle</button>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card"><i class="fas fa-coins muted"></i> <span class="muted">Bugünkü satış</span><span class="num">₺8.420</span><span class="trend"><i class="fas fa-arrow-up"></i> %18,4</span></div>
+        <div class="stat-card"><i class="fas fa-hourglass-half muted"></i> <span class="muted">Bekleyen sipariş</span><span class="num">27</span><span class="muted">kargoya hazır</span></div>
+        <div class="stat-card"><i class="fas fa-star muted" style="color:#f5b342;"></i> <span class="muted">Mağaza puanı</span><span class="num">9,6/10</span><span class="trend">🌟 Çok iyi</span></div>
+        <div class="stat-card"><i class="fas fa-exclamation-triangle muted" style="color:#b85c1a;"></i> <span class="muted">Stok uyarısı</span><span class="num">4</span><span style="color:#b85c1a;">düşük stok</span></div>
+      </div>
+      <div class="order-table">
+        <h3 style="margin-bottom: 10px;"><i class="fas fa-clipboard-list"></i> Son siparişler</h3>
+        <table>
+          <thead><tr><th>Sipariş</th><th>Alıcı</th><th>Ürün</th><th>Tutar</th><th>Durum</th></tr></thead>
+          <tbody>
+            <tr><td>#SP-10482</td><td>Selim Yılmaz</td><td>Bambu servis seti</td><td>₺749,90</td><td class="status-badge"><i class="fas fa-spinner fa-pulse"></i> Hazırlanıyor</td></tr>
+            <tr><td>#SP-10481</td><td>Mehmet Kaya</td><td>Çizgili nevresim</td><td>₺1.299,00</td><td class="status-badge"><i class="fas fa-truck"></i> Kargoda</td></tr>
+            <tr><td>#SP-10480</td><td>Elif Demir</td><td>Seramik kupa seti</td><td>₺449,90</td><td class="status-badge"><i class="fas fa-check-circle"></i> Teslim edildi</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <div class="toast" id="toastMessage"></div>
+
+  <script>
+    // ----- Genişletilmiş ürün verisi (yeni kategorilerle) -----
+    const productData = [
+      // Elektronik
+      ['Elektronik','fa-headphones','Bluetooth Kulaklık Pro','₺899,90','4.8'],
+      ['Elektronik','fa-clock','Akıllı saat Lite','₺1.649,00','4.7'],
+      ['Elektronik','fa-tablet','Tablet 10" HD','₺3.299,00','4.6'],
+      // Ev Yaşam
+      ['Ev Yaşam','fa-chair','Nordic çalışma sandalyesi','₺2.749,00','4.7'],
+      ['Ev Yaşam','fa-utensils','Bambu servis seti · 6 parça','₺749,90','4.8'],
+      ['Ev Yaşam','fa-mug-saucer','Seramik kupa seti (6lı)','₺449,90','4.9'],
+      ['Ev Yaşam','fa-lightbulb','Akıllı LED lamba','₺299,90','4.5'],
+      // Moda
+      ['Moda','fa-shoe-prints','Günlük sneaker · Beyaz','₺1.199,90','4.9'],
+      ['Moda','fa-hat-cowboy','Şapka · Yaz koleksiyonu','₺349,90','4.4'],
+      ['Moda','fa-watch','Deri kol saati','₺899,00','4.7'],
+      // Kozmetik
+      ['Kozmetik','fa-hand-sparkles','Doğal bakım seti','₺389,90','4.6'],
+      ['Kozmetik','fa-leaf','Organik yüz serumu','₺249,00','4.8'],
+      // Spor
+      ['Spor','fa-backpack','Şehir sırt çantası','₺599,90','4.8'],
+      ['Spor','fa-dumbbell','Dambıl seti · 2x5kg','₺499,00','4.5'],
+      // Kitap
+      ['Kitap','fa-book-open','Yapay Zeka Rehberi','₺129,90','4.9'],
+      ['Kitap','fa-book','Satranç Sanatı','₺89,90','4.7'],
+      // Oyuncak
+      ['Oyuncak','fa-robot','Akıllı robot oyuncak','₺459,00','4.6'],
+      ['Oyuncak','fa-puzzle-piece','3D bulmaca seti','₺199,90','4.3'],
+      // Otomotiv
+      ['Otomotiv','fa-oil-can','Motor yağı 5W-30','₺279,00','4.8'],
+      ['Otomotiv','fa-tools','Araç bakım seti','₺449,00','4.4'],
+      // Sağlık
+      ['Sağlık','fa-heart','Dijital tansiyon aleti','₺359,00','4.7'],
+      ['Sağlık','fa-weight-scale','Akıllı tartı','₺299,00','4.6']
+    ];
+
+    let cartItems = 0;
+    let currentCategory = 'Tümü';
+    let currentUser = 'buyer1';
+
+    function renderProducts() {
+      const grid = document.getElementById('productGrid');
+      const query = document.getElementById('searchInput').value.toLowerCase().trim();
+
+      const filtered = productData.filter(item => {
+        const matchCat = currentCategory === 'Tümü' || item[0] === currentCategory;
+        const matchSearch = item[2].toLowerCase().includes(query);
+        return matchCat && matchSearch;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<p class="muted" style="grid-column:1/-1; text-align:center; padding:30px;"><i class="fas fa-search" style="font-size:24px; display:block; margin-bottom:8px;"></i> Ürün bulunamadı. Farklı bir kelime deneyin.</p>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(p => `
+        <div class="product-card">
+          <div class="product-img"><i class="fas ${p[1]}"></i></div>
+          <div class="product-info">
+            <span class="product-tag"><i class="fas fa-tag"></i> ${p[0]} · ÜCRETSİZ KARGO</span>
+            <div class="product-title">${p[2]}</div>
+            <div class="product-rating"><i class="fas fa-star"></i> ${p[4]} <span class="muted">(128)</span></div>
+            <div class="product-price">${p[3]}</div>
+            <button class="btn-buy" onclick="addToCart('${p[2]}')"><i class="fas fa-cart-plus"></i> Sepete ekle</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function addToCart(name) {
+      cartItems++;
+      document.getElementById('cartCount').textContent = cartItems;
+      showToast(`🛒 ${name} sepete eklendi`);
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toastMessage');
+      t.innerHTML = msg;
+      t.style.display = 'block';
+      clearTimeout(t._timer);
+      t._timer = setTimeout(() => { t.style.display = 'none'; }, 2000);
+    }
+
+    function filterProducts() {
+      renderProducts();
+    }
+
+    function setCategory(cat, btn) {
+      currentCategory = cat;
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      else {
+        document.querySelector('.cat-btn[data-cat="Tümü"]')?.classList.add('active');
+      }
+      renderProducts();
+    }
+
+    function switchRole() {
+      const val = document.getElementById('roleSelect').value;
+      const buyerPanel = document.getElementById('buyerPanel');
+      const sellerPanel = document.getElementById('sellerPanel');
+      const greeting = document.getElementById('greetingUser');
+
+      if (val === 'seller') {
+        buyerPanel.classList.add('hidden');
+        sellerPanel.classList.add('visible');
+      } else {
+        buyerPanel.classList.remove('hidden');
+        sellerPanel.classList.remove('visible');
+        const names = { buyer1: 'Selim', buyer2: 'Mehmet', buyer3: 'Elif' };
+        greeting.textContent = names[val] || 'Misafir';
+        currentUser = val;
+      }
+      renderProducts();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.cat-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          const cat = this.dataset.cat;
+          setCategory(cat, this);
+        });
+      });
+
+      const searchInput = document.getElementById('searchInput');
+      searchInput.addEventListener('input', function() {
+        renderProducts();
+      });
+
+      document.getElementById('cartBtn').addEventListener('click', function() {
+        showToast(`🛒 Sepetinizde ${cartItems} ürün var`);
+      });
+
+      renderProducts();
+      document.querySelector('.cat-btn[data-cat="Tümü"]')?.classList.add('active');
+    });
+
+    window.filterProducts = filterProducts;
+    window.addToCart = addToCart;
+    window.showToast = showToast;
+    window.switchRole = switchRole;
+    window.setCategory = setCategory;
+  </script>
+</body>
+</html>
